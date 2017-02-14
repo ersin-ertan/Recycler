@@ -9,8 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.jaychang.srv.SimpleRecyclerView;
+import com.jaychang.srv.behavior.SwipeToDismissCallback;
 import com.jaychang.srv.decoration.SectionHeaderProvider;
 import com.jaychang.srv.decoration.SectionHeaderProviderAdapter;
+
+import static com.jaychang.srv.behavior.SwipeDirection.LEFT;
+import static com.jaychang.srv.behavior.SwipeDirection.RIGHT;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,8 +32,10 @@ public class MainActivity extends AppCompatActivity {
         int i;
         i = -1;
 
-        int adapterPosition = recyclerView.getChildAdapterPosition(recyclerView.findViewById(i+1));
-        int childLayoutPosition = recyclerView.getChildLayoutPosition(recyclerView.findViewById(i+1));
+        int adapterPosition =
+            recyclerView.getChildAdapterPosition(recyclerView.findViewById(i + 1));
+        int childLayoutPosition =
+            recyclerView.getChildLayoutPosition(recyclerView.findViewById(i + 1));
 
         recyclerView.addCell(adapterPosition + 1, new TextCell(new Text(String.valueOf(i),
             i < 10 ? 0 : i < 20 ? 1 : i < 30 ? 2 : i < 40 ? 3 : i < 50 ? 4 : 5)));
@@ -48,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
       @NonNull @Override public View getSectionHeaderView(Text item, int position) {
         View view = LayoutInflater.from(MainActivity.this)
             .inflate(android.R.layout.simple_list_item_2, null, false);
-        view.setBackgroundColor(ContextCompat.getColor(MainActivity.this, android.R.color.holo_orange_light));
+        view.setBackgroundColor(
+            ContextCompat.getColor(MainActivity.this, android.R.color.holo_orange_light));
         TextView textView = (TextView) view.findViewById(android.R.id.text1);
         //textView.setTextColor(
         //    ContextCompat.getColor(MainActivity.this, android.R.color.holo_orange_light));
@@ -99,6 +106,36 @@ public class MainActivity extends AppCompatActivity {
       recyclerView.addCell(new TextCell(new Text(String.valueOf(i),
           i < 10 ? 0 : i < 20 ? 1 : i < 30 ? 2 : i < 40 ? 3 : i < 50 ? 4 : 5)));
     }
+
+    SwipeToDismissCallback<Text> swipeToDismissCallback = new SwipeToDismissCallback<Text>() {
+      // Optional, return false if you manipulate custom swipe effect in the rest of callbacks.
+
+      //@Override public boolean enableDefaultFadeOutEffect() {
+      //  // default return true
+      //  return super.enableDefaultFadeOutEffect();
+      //}
+
+      //// Optional
+      //@Override public void onCellSwiping(SimpleRecyclerView simpleRecyclerView, View itemView,
+      //    Text item, int position, Canvas canvas, float dX, float dY, boolean isControlledByUser) {
+      //  resultView.setText("Item " + item + " is swiping.");
+      //}
+      //
+      //// Optional
+      //@Override public void onCellSettled(SimpleRecyclerView simpleRecyclerView, View itemView,
+      //    Text item, int position) {
+      //  resultView.setText("Item " + item + " is settled.");
+      //}
+      //
+      //// Optional
+      //@Override public void onCellDismissed(SimpleRecyclerView simpleRecyclerView, Text item,
+      //    int position) {
+      //  resultView.setText("Item: " + item + " is dismissed.");
+      //}
+    };
+
+    // enable swipe left or right to dismiss
+    recyclerView.enableSwipeToDismiss(swipeToDismissCallback, LEFT, RIGHT);
   }
 
   class Text {
