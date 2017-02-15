@@ -9,12 +9,14 @@ import com.jaychang.srv.SimpleCell;
 import com.jaychang.srv.SimpleViewHolder;
 
 /**
- * Created by mms on 2/14/17.
+ * Created by mms on 2/15/17.
  */
 
-class TextCell extends SimpleCell<Text, TextCell.ViewHolder> {
+class TextCell2 extends SimpleCell<Text2, TextCell2.ViewHolder> {
 
-  public TextCell(Text item) {super(item);}
+  public TextCell2(Text2 item) {
+    super(item);
+  }
 
   @Override protected int getLayoutRes() {
     return android.R.layout.simple_list_item_1;
@@ -24,12 +26,10 @@ class TextCell extends SimpleCell<Text, TextCell.ViewHolder> {
     return new ViewHolder(view);
   }
 
-  @Override protected long getItemId() {
-    return Integer.parseInt(getItem().text);
-  }
+  @Override protected long getItemId() {return 0;}
 
   @Override
-  protected void onBindViewHolder(TextCell.ViewHolder simpleViewHolder, int i, Context context,
+  protected void onBindViewHolder(TextCell2.ViewHolder simpleViewHolder, int i, Context context,
       Object o) {
     TextView tv = simpleViewHolder.textView;
     String text = getItem().text;
@@ -47,12 +47,10 @@ class TextCell extends SimpleCell<Text, TextCell.ViewHolder> {
   }
 }
 
-class Text {
+class Text2 {
   public String text;
-  public int section;
 
-  Text(String t, int s) {
+  Text2(String t) {
     text = t;
-    section = s;
   }
 }
