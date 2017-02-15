@@ -9,6 +9,7 @@
     >
 
   <com.jaychang.srv.SimpleRecyclerView
+      android:layout_marginStart="16dp"
       android:id="@+id/recyclerView"
       android:layout_width="400dp"
       android:layout_height="0dp"

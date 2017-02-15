@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import com.jaychang.srv.SimpleRecyclerView;
 import com.jaychang.srv.behavior.SwipeToDismissCallback;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 import static com.jaychang.srv.behavior.SwipeDirection.LEFT;
 import static com.jaychang.srv.behavior.SwipeDirection.RIGHT;
@@ -23,14 +22,8 @@ public class MainActivity extends AppCompatActivity {
     Button button = (Button) findViewById(R.id.button);
     recyclerView = (SimpleRecyclerView) findViewById(R.id.recyclerView);
 
-    SectionedRecyclerViewAdapter sectionAdapter = new SectionedRecyclerViewAdapter();
-
-    final MySection mySection = new MySection();
-    sectionAdapter.addSection(mySection);
-
     // Set up your RecyclerView with the SectionedRecyclerViewAdapter
     //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    recyclerView.setAdapter(sectionAdapter);
 
     button.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -44,8 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
         //recyclerView.addCell(0, new TextCell(new Text(String.valueOf(i),
         //    i < 10 ? 0 : i < 20 ? 1 : i < 30 ? 2 : i < 40 ? 3 : i < 50 ? 4 : 5)));
-        mySection.myList.add("ANother");
-
+        recyclerView.addCell(new TextCell3(new Text3(0, "a", "b", "c")));
+        recyclerView.addCell(new TextCell3(new Text3(1, "d", "e", "f")));
+        recyclerView.addCell(new TextCell3(new Text3(2, "g", "h", "i")));
       }
     });
 
@@ -53,11 +47,15 @@ public class MainActivity extends AppCompatActivity {
 
     button2.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        recyclerView.removeCell(3);
+        //recyclerView.removeCell(3);
+        TextCell3.ViewHolder vh = (TextCell3.ViewHolder) recyclerView.findViewHolderForItemId(
+            2); // item id will be the section id
+        int adapterPosition = vh.getAdapterPosition();
+        recyclerView.updateCell(adapterPosition, new Text3(2, "new", "changes", "made"));
       }
     });
 
-    sectionHeaders();
+    //sectionHeaders();
 
     //SectionHeaderProvider<Text> sectionHeaderProvider2 = new SectionHeaderProviderAdapter<Text>() {
     //  // Your section header view here
@@ -148,13 +146,5 @@ public class MainActivity extends AppCompatActivity {
     //    return false;
     //  }
     //};
-  }
-
-  class Text3 {
-    public String text;
-
-    Text3(String t) {
-      text = t;
-    }
   }
 }
