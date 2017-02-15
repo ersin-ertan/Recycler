@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import com.jaychang.srv.SimpleRecyclerView;
 import com.jaychang.srv.behavior.SwipeToDismissCallback;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 import static com.jaychang.srv.behavior.SwipeDirection.LEFT;
 import static com.jaychang.srv.behavior.SwipeDirection.RIGHT;
@@ -22,6 +23,15 @@ public class MainActivity extends AppCompatActivity {
     Button button = (Button) findViewById(R.id.button);
     recyclerView = (SimpleRecyclerView) findViewById(R.id.recyclerView);
 
+    SectionedRecyclerViewAdapter sectionAdapter = new SectionedRecyclerViewAdapter();
+
+    final MySection mySection = new MySection();
+    sectionAdapter.addSection(mySection);
+
+    // Set up your RecyclerView with the SectionedRecyclerViewAdapter
+    //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    recyclerView.setAdapter(sectionAdapter);
+
     button.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
 
@@ -32,8 +42,10 @@ public class MainActivity extends AppCompatActivity {
         //int childLayoutPosition =
         //    recyclerView.getChildLayoutPosition(recyclerView.findViewById(i + 1));
 
-        recyclerView.addCell(0, new TextCell(new Text(String.valueOf(i),
-            i < 10 ? 0 : i < 20 ? 1 : i < 30 ? 2 : i < 40 ? 3 : i < 50 ? 4 : 5)));
+        //recyclerView.addCell(0, new TextCell(new Text(String.valueOf(i),
+        //    i < 10 ? 0 : i < 20 ? 1 : i < 30 ? 2 : i < 40 ? 3 : i < 50 ? 4 : 5)));
+        mySection.myList.add("ANother");
+
       }
     });
 
@@ -65,12 +77,12 @@ public class MainActivity extends AppCompatActivity {
     //  }
     //};
 
-    recyclerView.addCell(0, new TextCell2(new Text2("Text1")));
-    recyclerView.addCell(0, new TextCell2(new Text2("Text2")));
-    recyclerView.addCell(0, new TextCell2(new Text2("Text3")));
-    recyclerView.addCell(0, new TextCell2(new Text2("Text4")));
-    recyclerView.addCell(0, new TextCell2(new Text2("Text5")));
-    recyclerView.addCell(0, new TextCell2(new Text2("Text6")));
+    //recyclerView.addCell(0, new TextCell2(new Text2("Text1")));
+    //recyclerView.addCell(0, new TextCell2(new Text2("Text2")));
+    //recyclerView.addCell(0, new TextCell2(new Text2("Text3")));
+    //recyclerView.addCell(0, new TextCell2(new Text2("Text4")));
+    //recyclerView.addCell(0, new TextCell2(new Text2("Text5")));
+    //recyclerView.addCell(0, new TextCell2(new Text2("Text6")));
 
     //recyclerView.setSectionHeader(sectionHeaderProvider2);
 
