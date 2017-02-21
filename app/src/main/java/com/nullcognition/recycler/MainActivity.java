@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.jaychang.srv.SimpleCell;
 import com.jaychang.srv.SimpleRecyclerView;
 import com.jaychang.srv.behavior.SwipeToDismissCallback;
 import com.jaychang.srv.decoration.SectionHeaderProvider;
@@ -17,6 +19,9 @@ import static com.jaychang.srv.behavior.SwipeDirection.LEFT;
 import static com.jaychang.srv.behavior.SwipeDirection.RIGHT;
 
 public class MainActivity extends AppCompatActivity {
+
+  private String arrows =
+      "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<";
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -29,16 +34,26 @@ public class MainActivity extends AppCompatActivity {
 
     button.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        int i;
-        i = -1;
 
-        int adapterPosition =
-            recyclerView.getChildAdapterPosition(recyclerView.findViewById(i + 1));
-        int childLayoutPosition =
-            recyclerView.getChildLayoutPosition(recyclerView.findViewById(i + 1));
+        recyclerView.updateCell(1, new Text("1000", 0));
 
-        recyclerView.addCell(adapterPosition + 1, new TextCell(new Text(String.valueOf(i),
-            i < 10 ? 0 : i < 20 ? 1 : i < 30 ? 2 : i < 40 ? 3 : i < 50 ? 4 : 5)));
+        Log.i("GETAFTERUPDATE", ((TextCell) recyclerView.getCell(1)).getItem().text);
+
+        int total = 0;
+        for (SimpleCell sc : recyclerView.getAllCells()) {
+          if (sc instanceof TextCell) {
+            total += Integer.parseInt(((TextCell) sc).getItem().text);
+          }
+        }
+        Log.i("TOTAL", String.valueOf(total) + arrows);
+
+        //int adapterPosition =
+        //    recyclerView.getChildAdapterPosition(recyclerView.findViewById(i + 1));
+        //int childLayoutPosition =
+        //    recyclerView.getChildLayoutPosition(recyclerView.findViewById(i + 1));
+        //
+        //recyclerView.addCell(adapterPosition + 1, new TextCell(new Text(String.valueOf(i),
+        //    i < 10 ? 0 : i < 20 ? 1 : i < 30 ? 2 : i < 40 ? 3 : i < 50 ? 4 : 5)));
 
         //i = 59;
         //adapterPosition = recyclerView.getChildAdapterPosition(recyclerView.findViewById(56));
@@ -106,6 +121,14 @@ public class MainActivity extends AppCompatActivity {
       recyclerView.addCell(new TextCell(new Text(String.valueOf(i),
           i < 10 ? 0 : i < 20 ? 1 : i < 30 ? 2 : i < 40 ? 3 : i < 50 ? 4 : 5)));
     }
+
+    int total = 0;
+    for (SimpleCell sc : recyclerView.getAllCells()) {
+      if (sc instanceof TextCell) {
+        total += Integer.parseInt(((TextCell) sc).getItem().text);
+      }
+    }
+    Log.i("TOTAL", String.valueOf(total) + arrows);
 
     SwipeToDismissCallback<Text> swipeToDismissCallback = new SwipeToDismissCallback<Text>() {
       // Optional, return false if you manipulate custom swipe effect in the rest of callbacks.

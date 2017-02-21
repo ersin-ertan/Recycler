@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.jaychang.srv.SimpleCell;
 import com.jaychang.srv.SimpleViewHolder;
+import com.jaychang.srv.Updatable;
 
 /**
  * Created by mms on 2/14/17.
  */
 
-class TextCell extends SimpleCell<MainActivity.Text, TextCell.ViewHolder> {
+class TextCell extends SimpleCell<MainActivity.Text, TextCell.ViewHolder>
+    implements Updatable<MainActivity.Text> {
 
   public TextCell(MainActivity.Text item) {
     super(item);
@@ -33,9 +35,20 @@ class TextCell extends SimpleCell<MainActivity.Text, TextCell.ViewHolder> {
   @Override
   protected void onBindViewHolder(TextCell.ViewHolder simpleViewHolder, int i, Context context,
       Object o) {
+    if (o != null && o instanceof MainActivity.Text) {
+      setItem((MainActivity.Text) o);
+    }
     TextView tv = simpleViewHolder.textView;
     String text = getItem().text;
     if (tv != null && text != null) tv.setText(text);
+  }
+
+  @Override public boolean areContentsTheSame(MainActivity.Text text) {
+    return getItem().text.equals(text.text) && getItem().section == text.section;
+  }
+
+  @Override public Object getChangePayload(MainActivity.Text text) {
+    return text;
   }
 
   static class ViewHolder extends SimpleViewHolder {
